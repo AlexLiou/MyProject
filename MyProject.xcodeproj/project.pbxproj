@@ -11,6 +11,8 @@
 		79D999C92853DF8B00090113 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C82853DF8B00090113 /* ContentView.swift */; };
 		79D999CB2853DF9300090113 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D999CA2853DF9300090113 /* Assets.xcassets */; };
 		79D999CE2853DF9300090113 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D999CD2853DF9300090113 /* Preview Assets.xcassets */; };
+		79D999D62853E03600090113 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 79D999D42853E03600090113 /* Main.xcdatamodeld */; };
+		79D999D82853E46A00090113 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999D72853E46A00090113 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,9 @@
 		79D999C82853DF8B00090113 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		79D999CA2853DF9300090113 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79D999CD2853DF9300090113 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		79D999D52853E03600090113 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
+		79D999D72853E46A00090113 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		79D999D92853F00D00090113 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +56,11 @@
 		79D999C52853DF8B00090113 /* MyProject */ = {
 			isa = PBXGroup;
 			children = (
+				79D999D92853F00D00090113 /* Info.plist */,
 				79D999C62853DF8B00090113 /* MyProjectApp.swift */,
 				79D999C82853DF8B00090113 /* ContentView.swift */,
+				79D999D42853E03600090113 /* Main.xcdatamodeld */,
+				79D999D72853E46A00090113 /* DataController.swift */,
 				79D999CA2853DF9300090113 /* Assets.xcassets */,
 				79D999CC2853DF9300090113 /* Preview Content */,
 			);
@@ -137,6 +145,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79D999D62853E03600090113 /* Main.xcdatamodeld in Sources */,
+				79D999D82853E46A00090113 /* DataController.swift in Sources */,
 				79D999C92853DF8B00090113 /* ContentView.swift in Sources */,
 				79D999C72853DF8B00090113 /* MyProjectApp.swift in Sources */,
 			);
@@ -270,6 +280,7 @@
 				DEVELOPMENT_TEAM = D4RQLUZ88Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +310,7 @@
 				DEVELOPMENT_TEAM = D4RQLUZ88Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -339,6 +351,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		79D999D42853E03600090113 /* Main.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				79D999D52853E03600090113 /* Main.xcdatamodel */,
+			);
+			currentVersion = 79D999D52853E03600090113 /* Main.xcdatamodel */;
+			path = Main.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 79D999BB2853DF8B00090113 /* Project object */;
 }
