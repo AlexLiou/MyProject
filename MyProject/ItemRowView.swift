@@ -22,7 +22,7 @@ struct ItemRowView: View {
         }
     }
     
-//    Computed properties conventially have a constant complexity, O(1).
+    //    Computed properties conventially have a constant complexity, O(1).
     var icon: some View {
         if item.completed {
             return Image(systemName: "checkmark.circle")

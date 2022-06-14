@@ -17,6 +17,6 @@ extension Binding {
             self.wrappedValue = newValue
             handler()
         }
-
+        
     }
 }

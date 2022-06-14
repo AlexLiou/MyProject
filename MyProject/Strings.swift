@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum Strings: LocalizedStringKey {
-    case appWelcomeMessage
-    case updateSettings
+case appWelcomeMessage
+case updateSettings
 }
 
 extension Text {
@@ -18,8 +18,7 @@ extension Text {
     }
 }
 
-struct test: View {
-    
+struct Test: View {
     var body: some View {
         VStack {
             Text(.appWelcomeMessage, tableName: "Main")

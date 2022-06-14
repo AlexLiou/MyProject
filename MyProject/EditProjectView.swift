@@ -45,14 +45,20 @@ struct EditProjectView: View {
                 }
                 .accentColor(.red)
             } footer: {
+                // swiftlint:disable:next line_length
                 Text("Closing a project moves it from the Open to Closed tab; deleting it removes the project completely")
             }
-
+            
         }
         .navigationTitle("Edit Project")
         .onDisappear(perform: dataController.save)
         .alert(isPresented: $showingDeleteConfirm) {
-            Alert(title: Text("Delete project?"), message: Text("Are you sure you want to delete this project?"))
+            Alert(
+                title: Text("Delete project?"),
+                message: Text("Are you sure you want to delete this project?"),// swiftlint:disable:this line_length
+                primaryButton: .default(Text("Delete"), action: delete),
+                secondaryButton: .cancel()
+            )
         }
     }
     

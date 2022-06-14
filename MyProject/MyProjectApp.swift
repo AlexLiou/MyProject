@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct MyProjectApp: App {
-    // @StateObject because our app will create and own the data controller, ensuring it stays alive for the duration of the our app's runtime.
+    // @StateObject because our app will create and own the data controller,
+    // ensuring it stays alive for the duration of the our app's runtime.
     @StateObject var dataController: DataController
     var body: some Scene {
         WindowGroup {

@@ -48,7 +48,7 @@ struct AwardsView: View {
             .navigationTitle("Awards")
         }
         .alert(isPresented: $showingAwardDetails, content: getAwardAlert)
-
+        
     }
     
     func getAwardAlert() -> Alert {
