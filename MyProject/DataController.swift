@@ -20,7 +20,7 @@ class DataController: ObservableObject {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
         
-        container.loadPersistentStores { storeDescription, error in
+        container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
@@ -30,16 +30,16 @@ class DataController: ObservableObject {
     func createSampleData() throws {
         let viewContext = container.viewContext
         
-        for i in 1...5 {
+        for projectCounter in 1...5 {
             let project = Project(context: viewContext)
-            project.title = "Project \(i)"
+            project.title = "Project \(projectCounter)"
             project.items = []
             project.creationDate = Date()
             project.closed = Bool.random()
             
-            for j in 1...10 {
+            for itemCounter in 1...10 {
                 let item = Item(context: viewContext)
-                item.title = "Item \(j)"
+                item.title = "Item \(itemCounter)"
                 item.creationDate = Date()
                 item.completed = Bool.random()
                 item.project = project
@@ -81,5 +81,27 @@ class DataController: ObservableObject {
         let fetchRequest2: NSFetchRequest<NSFetchRequestResult> = Project.fetchRequest()
         let batchDeleteRequest2 = NSBatchDeleteRequest(fetchRequest: fetchRequest2)
         _ = try? container.viewContext.execute(batchDeleteRequest2)
+    }
+    
+    func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
+        (try? container.viewContext.count(for: fetchRequest)) ?? 0
+    }
+    
+    func hasEarned(award: Award) -> Bool {
+        switch award.criterion {
+        case "items":
+            let fetchRequest: NSFetchRequest<Item> = NSFetchRequest(entityName: "Item")
+            let awardCount = count(for: fetchRequest)
+            return awardCount >= award.value
+            
+        case "complete":
+            let fetchRequest: NSFetchRequest<Item> = NSFetchRequest(entityName: "Item")
+            fetchRequest.predicate = NSPredicate(format: "completed = true")
+            let awardCount = count(for: fetchRequest)
+            return awardCount >= award.value
+        default:
+            // fatalError("Unknown award criterion \(award.criterion).")
+            return false
+        }
     }
 }
