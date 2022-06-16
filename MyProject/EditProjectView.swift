@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The view displayed when Editing a Project.
 struct EditProjectView: View {
     let project: Project
     
@@ -61,7 +62,12 @@ struct EditProjectView: View {
             )
         }
     }
-    
+
+    /// Creates the Color Selector in the Edit Project View from Project.Colors
+    /// Accessibilty Elements added to make obvious the colors are buttons and when it is
+    /// selected.
+    /// - Parameter item: String from Project.colors
+    /// - Returns: View
     func colorButton(for item: String) -> some View {
         ZStack {
             Color(item)
@@ -84,7 +90,9 @@ struct EditProjectView: View {
         )
         .accessibilityLabel(LocalizedStringKey(item))
     }
-    
+
+    /// Updates the contents on the project model with the
+    /// TextField values.
     func update() {
         project.title = title
         project.detail = detail

@@ -50,7 +50,9 @@ struct AwardsView: View {
         .alert(isPresented: $showingAwardDetails, content: getAwardAlert)
         
     }
-    
+
+    /// Returns an Alert to show the description of the selected Award.
+    /// - Returns: Alert with content of the Award explaining the details.
     func getAwardAlert() -> Alert {
         if dataController.hasEarned(award: selectedAward) {
             return Alert(
@@ -66,11 +68,18 @@ struct AwardsView: View {
             )
         }
     }
-    
+
+    /// Checks if the award has been earned, if so returns the right color, else returns a faded color to show
+    /// the order has not been earned.
+    /// - Parameter award: the award selected
+    /// - Returns: Color, determined by the award.
     func color(for award: Award) -> Color {
         dataController.hasEarned(award: award) ? Color(award.color) : Color.secondary.opacity(0.5)
     }
-    
+
+    /// Checks if the award has been earned, if so returns "Unlocked", if not return "Locked"
+    /// - Parameter award: the award selected
+    /// - Returns: Text
     func label(for award: Award) -> Text {
         Text(dataController.hasEarned(award: award) ? "Unlocked: \(award.name)" : "Locked")
     }

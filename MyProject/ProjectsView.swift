@@ -13,6 +13,7 @@ class ProjectsViewModel: ObservableObject {
     static let closedTag: String? = "Closed"
 }
 
+/// The Project View displayed on the HomeView when the tabs "Open" or "Closed" are selected.
 struct ProjectsView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -40,7 +41,9 @@ struct ProjectsView: View {
             SelectSomethingView()
         }
     }
-    
+
+    /// The struct that displays the various projects in their own section. Options in the top right and left
+    /// for creating a new project and sorting respectively.
     var projectsList: some View {
         List {
             ForEach(projects.wrappedValue) { project in
@@ -52,9 +55,14 @@ struct ProjectsView: View {
                         delete(offsets, from: project)
                     }
                     if showClosedProjects == false {
-                        Button {
-                            addItem(to: project)
-                        } label: {
+                        /*
+                         In iOS 14.3 VoiceOver has a glitch that reads the label
+                         "Add Project as "Add" no matter what accessibility label
+                         we give this project when using a label. As a result, when
+                         VoiceOvewr is running we use a text view for hte button instead,
+                         forcing a correct reading without losign the original layout.
+                         */
+                        Button(action: addProject) {
                             if UIAccessibility.isVoiceOverRunning {
                                 Text("Add Project")
                             } else {
@@ -77,7 +85,8 @@ struct ProjectsView: View {
             sortProjectToolbarItem
         }
     }
-    
+
+    /// The Toolbar button for displaying sort options.
     var sortProjectToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Button {
@@ -87,7 +96,8 @@ struct ProjectsView: View {
             }
         }
     }
-    
+
+    /// The Toolbar button for displaying add project option.
     var addProjectToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             if showClosedProjects == false {
@@ -101,7 +111,8 @@ struct ProjectsView: View {
             }
         }
     }
-    
+
+    /// Creates new project and saves.
     func addProject() {
         withAnimation {
             let project = Project(context: managedObjectContext)

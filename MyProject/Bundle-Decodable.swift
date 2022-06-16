@@ -9,8 +9,8 @@ import Foundation
 
 extension Bundle {
     
-    //    T is our placeholder for some unknown type. file name as a string. A date decoding strategy to handle dates for this JSON file.
-    //    A key decoding strategy so we can convert between snake_case and camelCase.
+    ///    T is our placeholder for some unknown type. file name as a string. A date decoding strategy to handle dates for this JSON file.
+    ///    A key decoding strategy so we can convert between snake_case and camelCase.
     func decode<T: Decodable>(
         _ type: T.Type,
         from file: String,

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// The Project Table Summary seen in the HomeView.
 struct ProjectSummaryView: View {
     @ObservedObject var project: Project
     
@@ -15,10 +17,8 @@ struct ProjectSummaryView: View {
             Text("\(project.projectItems.count) items")
                 .font(.caption)
                 .foregroundColor(.secondary)
-            
             Text(project.projectTitle)
                 .font(.title2)
-            
             ProgressView(value: project.completionAmount)
                 .accentColor(Color(project.projectColor))
         }

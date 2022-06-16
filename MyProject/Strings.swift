@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This is an extraneous file made to experiment with strings.
 enum Strings: LocalizedStringKey {
 case appWelcomeMessage
 case updateSettings

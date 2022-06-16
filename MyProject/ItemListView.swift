@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// The Item List rows displayed in the Home View
 struct ItemListView: View {
     let title: LocalizedStringKey
     let items: FetchedResults<Item>.SubSequence
@@ -26,7 +28,11 @@ struct ItemListView: View {
             }
         }
     }
-    
+
+    /// Creates an entry in the itemList, with a Circle and then a cursory glance
+    /// of the item.
+    /// - Parameter item: The item being displayed
+    /// - Returns: The view.
     func itemList(for item: Item) -> some View {
         HStack(spacing: 20) {
             Circle()

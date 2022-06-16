@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 
+/// The HomeView displays the most high priority items and a Project Summary View at the top
 struct HomeView: View {
     @FetchRequest(
         entity: Project.entity(),
@@ -50,7 +51,8 @@ struct HomeView: View {
     var projectRows: [GridItem] {
         [GridItem(.fixed(100))]
     }
-    
+
+    // Construct a fetch request to show the 10 highest-priority, incomplete items from open projects.
     init() {
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         let completedPredicate = NSPredicate(format: "completed = false")

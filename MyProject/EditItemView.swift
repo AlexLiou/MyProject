@@ -11,6 +11,7 @@ class EditItemViewModel: ObservableObject {
     
 }
 
+/// The View displayed when Editing an Item.
 struct EditItemView: View {
     @State private var title: String
     @State private var detail: String
@@ -43,7 +44,9 @@ struct EditItemView: View {
         .navigationTitle("Edit Item")
         .onDisappear(perform: dataController.save)
     }
-    
+
+    /// Certain explanation for why the item was ititalized this way.
+    /// - Parameter item: <#item description#>
     init(item: Item) {
         self.item = item
         

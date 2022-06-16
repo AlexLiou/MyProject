@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The Row created for Project View displaying the Item.
 struct ItemRowView: View {
     @ObservedObject var project: Project
     @ObservedObject var item: Item
@@ -14,7 +15,7 @@ struct ItemRowView: View {
     var body: some View {
         NavigationLink(destination: EditItemView(item: item)) {
             Label {
-                Text(item.itemTitle)
+                label
             } icon: {
                 icon
             }
@@ -22,7 +23,8 @@ struct ItemRowView: View {
         }
     }
     
-    //    Computed properties conventially have a constant complexity, O(1).
+    /// Displays the select icon depending on the completion or priority of the item.
+    /// Computed properties conventially have a constant complexity, O(1).
     var icon: some View {
         if item.completed {
             return Image(systemName: "checkmark.circle")

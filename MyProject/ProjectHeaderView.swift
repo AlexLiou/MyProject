@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// The proejct header part of the Projects View. Displays the title and a progress
+/// bar showing how far the project is towards completion. Contains a link to Edit the project.
 struct ProjectHeaderView: View {
     @ObservedObject var project: Project
     

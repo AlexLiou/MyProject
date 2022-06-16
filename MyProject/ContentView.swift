@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// The main content View, uses a TabView to switch between the HomeView, ProjectsView (closed or open),
+/// and AwardsView.
 struct ContentView: View {
     @SceneStorage("selectedView") var selectedView: String?
     
