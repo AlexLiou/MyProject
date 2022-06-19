@@ -9,43 +9,26 @@ import SwiftUI
 
 /// The Row created for Project View displaying the Item.
 struct ItemRowView: View {
-    @ObservedObject var project: Project
+    @StateObject var vm: ViewModel
     @ObservedObject var item: Item
     
     var body: some View {
         NavigationLink(destination: EditItemView(item: item)) {
             Label {
-                label
+                Text(vm.title)
             } icon: {
-                icon
+                Image(systemName: vm.icon)
+                    .foregroundColor(vm.color.map { Color($0) } ?? .clear)
             }
-            .accessibilityLabel(label)
+            .accessibilityLabel(vm.label)
         }
     }
-    
-    /// Displays the select icon depending on the completion or priority of the item.
-    /// Computed properties conventially have a constant complexity, O(1).
-    var icon: some View {
-        if item.completed {
-            return Image(systemName: "checkmark.circle")
-                .foregroundColor(Color(project.projectColor))
-        } else if item.priority == 3 {
-            return Image(systemName: "exclamationmark.triangle")
-                .foregroundColor(Color(project.projectColor))
-        } else {
-            return Image(systemName: "checkmark.circle")
-                .foregroundColor(.clear)
-        }
-    }
-    
-    var label: Text {
-        if item.completed {
-            return Text("\(item.itemTitle), completed.")
-        } else if item.priority == 3 {
-            return Text("\(item.itemTitle), high priority.")
-        } else {
-            return Text(item.itemTitle)
-        }
+
+    init(project: Project, item: Item) {
+        let vm = ViewModel(project: project, item: item)
+        _vm = StateObject(wrappedValue: vm)
+
+        self.item = item
     }
 }
 
