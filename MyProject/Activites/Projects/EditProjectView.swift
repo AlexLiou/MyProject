@@ -10,19 +10,19 @@ import SwiftUI
 /// The view displayed when Editing a Project.
 struct EditProjectView: View {
     let project: Project
-    
+
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var dataController: DataController
-    
+
     @State private var showingDeleteConfirm = false
     @State private var title: String
     @State private var detail: String
     @State private var color: String
-    
+
     let colorColumns = [
         GridItem(.adaptive(minimum: 44))
     ]
-    
+
     var body: some View {
         Form {
             Section(header: Text("Basic settings")) {
@@ -40,7 +40,7 @@ struct EditProjectView: View {
                     project.closed.toggle()
                     update()
                 }
-                
+
                 Button("Delete this project") {
                     showingDeleteConfirm.toggle()
                 }
@@ -49,14 +49,14 @@ struct EditProjectView: View {
                 // swiftlint:disable:next line_length
                 Text("Closing a project moves it from the Open to Closed tab; deleting it removes the project completely")
             }
-            
+
         }
         .navigationTitle("Edit Project")
         .onDisappear(perform: dataController.save)
         .alert(isPresented: $showingDeleteConfirm) {
             Alert(
                 title: Text("Delete project?"),
-                message: Text("Are you sure you want to delete this project?"),// swiftlint:disable:this line_length
+                message: Text("Are you sure you want to delete this project?"),
                 primaryButton: .default(Text("Delete"), action: delete),
                 secondaryButton: .cancel()
             )
@@ -98,15 +98,15 @@ struct EditProjectView: View {
         project.detail = detail
         project.color = color
     }
-    
+
     func delete() {
         dataController.delete(project)
         presentationMode.wrappedValue.dismiss()
     }
-    
+
     init(project: Project) {
         self.project = project
-        
+
         _title = State(wrappedValue: project.projectTitle)
         _detail = State(wrappedValue: project.projectDetail)
         _color = State(wrappedValue: project.projectColor)

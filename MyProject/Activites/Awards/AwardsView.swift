@@ -8,8 +8,11 @@
 import SwiftUI
 
 /*
- There are two ways of showing alerts in SwiftUI: waiting for a Boolean to become true, or waiting for an optional Identifiable property
- to change. Latter is preferable because it allows you to present data from that property in your alert. With the Boolean appraoch, you'd need to unwrap the optional or provide a sensible default yourself. We'll use both because we want to be able to pass along the selected award property.
+ There are two ways of showing alerts in SwiftUI: waiting for a Boolean to become true,
+ or waiting for an optional Identifiable property to change.
+ Latter is preferable because it allows you to present data from that property in your alert.
+ With the Boolean appraoch, you'd need to unwrap the optional or provide a sensible default yourself.
+ We'll use both because we want to be able to pass along the selected award property.
  */
 
 extension AwardsView {
@@ -42,17 +45,17 @@ extension AwardsView {
 }
 
 struct AwardsView: View {
-    
+
     @StateObject var vm: ViewModel
-    
+
     static let tag: String? = "Awards"
     @State private var selectedAward = Award.example
     @State private var showingAwardDetails = false
-    
+
     var columns: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 100))]
     }
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -77,7 +80,7 @@ struct AwardsView: View {
             .navigationTitle("Awards")
         }
         .alert(isPresented: $showingAwardDetails, content: getAwardAlert)
-        
+
     }
 
     /// Returns an Alert to show the description of the selected Award.
@@ -97,10 +100,15 @@ struct AwardsView: View {
             )
         }
     }
+
+    init(dataController: DataController) {
+        let vm = ViewModel(dataController: dataController)
+        _vm = StateObject(wrappedValue: vm)
+    }
 }
 
-//struct AwardsView_Previews: PreviewProvider {
+// struct AwardsView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        AwardsView()
 //    }
-//}
+// }

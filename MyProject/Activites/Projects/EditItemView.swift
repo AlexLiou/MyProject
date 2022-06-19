@@ -8,7 +8,7 @@
 import SwiftUI
 
 class EditItemViewModel: ObservableObject {
-    
+
 }
 
 /// The View displayed when Editing an Item.
@@ -20,14 +20,14 @@ struct EditItemView: View {
     let item: Item
     @StateObject var vm = EditItemViewModel()
     @EnvironmentObject var dataController: DataController
-    
+
     var body: some View {
         Form {
             Section(header: Text("Basic Settings")) {
                 TextField("Item name", text: $title.onChange(update))
                 TextField("Description", text: $detail.onChange(update))
             }
-            
+
             Section(header: Text("Priority")) {
                 Picker("Priority", selection: $priority.onChange(update)) {
                     Text("Low").tag(1)
@@ -36,7 +36,7 @@ struct EditItemView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            
+
             Section {
                 Toggle("Mark Completed", isOn: $completed.onChange(update))
             }
@@ -49,16 +49,16 @@ struct EditItemView: View {
     /// - Parameter item: <#item description#>
     init(item: Item) {
         self.item = item
-        
+
         _title = State(wrappedValue: item.itemTitle)
         _detail = State(wrappedValue: item.itemDetail)
         _priority = State(wrappedValue: Int(item.priority))
         _completed = State(wrappedValue: item.completed)
     }
-    
+
     func update() {
         item.project?.objectWillChange.send()
-        
+
         item.title = title
         item.detail = detail
         item.priority = Int16(priority)
@@ -66,8 +66,8 @@ struct EditItemView: View {
     }
 }
 //
-//struct EditItemView_Previews: PreviewProvider {
+// struct EditItemView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        EditItemView(item: Item.example)
 //    }
-//}
+// }

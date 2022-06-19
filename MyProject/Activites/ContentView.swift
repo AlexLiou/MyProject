@@ -12,7 +12,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var dataController: DataController
     @SceneStorage("selectedView") var selectedView: String?
-    
+
     var body: some View {
         TabView(selection: $selectedView) {
             HomeView(dataController: dataController)
@@ -33,7 +33,7 @@ struct ContentView: View {
                     Image(systemName: "checkmark")
                     Text("Closed")
                 }
-            AwardsView()
+            AwardsView(dataController: dataController)
                 .tag(AwardsView.tag)
                 .tabItem {
                     Image(systemName: "rosette")
@@ -45,7 +45,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var dataController = DataController.preview
-    
+
     static var previews: some View {
         ContentView()
             .environment(\.managedObjectContext, dataController.container.viewContext)

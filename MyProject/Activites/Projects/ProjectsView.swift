@@ -87,9 +87,9 @@ struct ProjectsView: View {
         \Item.itemTitle,
          \Item.itemCreationDate
     ]
-    
+
     @State private var showingSortOrder = false
-    
+
     var body: some View {
         NavigationView {
             Group {

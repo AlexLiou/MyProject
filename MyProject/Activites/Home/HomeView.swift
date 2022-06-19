@@ -9,7 +9,11 @@ import SwiftUI
 import CoreData
 
 /*
- Almost all logic now comes out from the view, meaning that all sorts of logic can now be tested without resorting to UI tests. Even better, Core Data is now an implementation detail of our view models - we could replace it with flat JSON if we wanted and neither HomeView or ProjectsView would care.
+ Almost all logic now comes out from the view, meaning that
+ all sorts of logic can now be tested without resorting to UI tests.
+ Even better, Core Data is now an implementation detail of our view models
+ - we could replace it with flat JSON if we wanted and neither
+ HomeView or ProjectsView would care.
  */
 extension HomeView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
@@ -94,7 +98,7 @@ extension HomeView {
 /// The HomeView displays the most high priority items and a Project Summary View at the top
 struct HomeView: View {
     @StateObject var vm: ViewModel
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -118,10 +122,10 @@ struct HomeView: View {
             .toolbar {
                 Button("Add Data", action: vm.addSampleData)
             }
-            
+
         }
     }
-    
+
     var projectRows: [GridItem] {
         [GridItem(.fixed(100))]
     }
