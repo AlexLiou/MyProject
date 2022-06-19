@@ -10,24 +10,25 @@ import SwiftUI
 /// The main content View, uses a TabView to switch between the HomeView, ProjectsView (closed or open),
 /// and AwardsView.
 struct ContentView: View {
+    @EnvironmentObject var dataController: DataController
     @SceneStorage("selectedView") var selectedView: String?
     
     var body: some View {
         TabView(selection: $selectedView) {
-            HomeView()
-                .tag(ProjectsViewModel.tag)
+            HomeView(dataController: dataController)
+                .tag(ProjectsView.tag)
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            ProjectsView(showClosedProjects: false)
-                .tag(ProjectsViewModel.openTag)
+            ProjectsView(dataController: dataController, showClosedProjects: false)
+                .tag(ProjectsView.openTag)
                 .tabItem {
                     Image(systemName: "list.bullet")
                     Text("Open")
                 }
-            ProjectsView(showClosedProjects: true)
-                .tag(ProjectsViewModel.closedTag)
+            ProjectsView(dataController: dataController, showClosedProjects: true)
+                .tag(ProjectsView.closedTag)
                 .tabItem {
                     Image(systemName: "checkmark")
                     Text("Closed")

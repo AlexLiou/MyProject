@@ -30,6 +30,7 @@
 		7915F718285D332D00298DB1 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F717285D332D00298DB1 /* PerformanceTests.swift */; };
 		7915F720285D373300298DB1 /* MyProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F71F285D373300298DB1 /* MyProjectUITests.swift */; };
 		7915F722285D373300298DB1 /* MyProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F721285D373300298DB1 /* MyProjectUITestsLaunchTests.swift */; };
+		7915F729285FB6A900298DB1 /* ItemRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */; };
 		79D999C72853DF8B00090113 /* MyProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C62853DF8B00090113 /* MyProjectApp.swift */; };
 		79D999C92853DF8B00090113 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C82853DF8B00090113 /* ContentView.swift */; };
 		79D999CB2853DF9300090113 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D999CA2853DF9300090113 /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		7915F71D285D373300298DB1 /* MyProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7915F71F285D373300298DB1 /* MyProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectUITests.swift; sourceTree = "<group>"; };
 		7915F721285D373300298DB1 /* MyProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowViewModel.swift; sourceTree = "<group>"; };
 		79D999C32853DF8B00090113 /* MyProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79D999C62853DF8B00090113 /* MyProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectApp.swift; sourceTree = "<group>"; };
 		79D999C82853DF8B00090113 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				79D999EE28551C1F00090113 /* EditProjectView.swift */,
 				79D999E42854100200090113 /* EditItemView.swift */,
 				79D999E6285413A500090113 /* ItemRowView.swift */,
+				7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */,
 				79D999EA2855199400090113 /* ProjectHeaderView.swift */,
 				79D999DC2853F55A00090113 /* ProjectsView.swift */,
 				7915F6C828567DD000298DB1 /* SelectSomethingView.swift */,
@@ -494,6 +497,7 @@
 				7915F6C928567DD000298DB1 /* SelectSomethingView.swift in Sources */,
 				7915F6D1285682B300298DB1 /* Award.swift in Sources */,
 				79D999E7285413A500090113 /* ItemRowView.swift in Sources */,
+				7915F729285FB6A900298DB1 /* ItemRowViewModel.swift in Sources */,
 				7915F6EB2859133800298DB1 /* Strings.swift in Sources */,
 				79D999C92853DF8B00090113 /* ContentView.swift in Sources */,
 				79D999E92854146300090113 /* Binding-OnChange.swift in Sources */,

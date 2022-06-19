@@ -6,37 +6,109 @@
 //
 
 import SwiftUI
+import CoreData
+import Foundation
 
-class ProjectsViewModel: ObservableObject {
-    static let tag: String? = "Home"
-    static let openTag: String? = "Open"
-    static let closedTag: String? = "Closed"
+extension ProjectsView {
+    class ViewModel: NSObject, NSFetchedResultsControllerDelegate, ObservableObject {
+        let dataController: DataController
+        private let projectsController: NSFetchedResultsController<Project>
+        @Published var projects = [Project]()
+        let showClosedProjects: Bool
+        @Published var sortOrder = Item.SortOrder.optimized
+
+        /// Creates new project and saves.
+        func addProject() {
+            let project = Project(context: dataController.container.viewContext)
+            project.closed = false
+            project.creationDate = Date()
+            dataController.save()
+        }
+
+        func delete(_ offsets: IndexSet, from project: Project) {
+            let allItems = project.projectItems(using: sortOrder)
+
+            for offset in offsets {
+                let item = allItems[offset]
+                dataController.delete(item)
+            }
+
+            dataController.save()
+        }
+
+        func addItem(to project: Project) {
+            let item = Item(context: dataController.container.viewContext)
+            item.project = project
+            item.creationDate = Date()
+            dataController.save()
+        }
+
+        func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            if let newProjects = controller.fetchedObjects as? [Project] {
+                projects = newProjects
+            }
+        }
+
+        init(dataController: DataController, showClosedProjects: Bool) {
+            self.dataController = dataController
+            self.showClosedProjects = showClosedProjects
+
+            let request: NSFetchRequest<Project> = Project.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.creationDate, ascending: false)]
+            request.predicate = NSPredicate(format: "closed = %d", showClosedProjects)
+
+            projectsController = NSFetchedResultsController(
+                fetchRequest: request,
+                managedObjectContext: dataController.container.viewContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil
+            )
+            super.init()
+            projectsController.delegate = self
+
+            do {
+                try projectsController.performFetch()
+                projects = projectsController.fetchedObjects ?? []
+            } catch {
+                print("Failed to fetch projects")
+            }
+
+        }
+    }
 }
 
 /// The Project View displayed on the HomeView when the tabs "Open" or "Closed" are selected.
 struct ProjectsView: View {
-    @EnvironmentObject var dataController: DataController
-    @Environment(\.managedObjectContext) var managedObjectContext
-    @StateObject var vm = ProjectsViewModel()
-    let showClosedProjects: Bool
-    let projects: FetchRequest<Project>
+    @StateObject var vm: ViewModel
+    static let tag: String? = "Home"
+    static let openTag: String? = "Open"
+    static let closedTag: String? = "Closed"
     let sortingKeyPaths = [
         \Item.itemTitle,
          \Item.itemCreationDate
     ]
     
     @State private var showingSortOrder = false
-    @State private var sortOrder = Item.SortOrder.optimized
     
     var body: some View {
         NavigationView {
             Group {
-                if projects.wrappedValue.count == 0 {
+                if vm.projects.count == 0 {
                     Text("There's nothing here right now.")
                         .foregroundColor(.secondary)
                 } else {
                     projectsList
                 }
+            }
+            .navigationTitle(vm.showClosedProjects ? "Closed Projects" : "Open Projects")
+            .confirmationDialog(Text("Sort items"), isPresented: $showingSortOrder) {
+                Button("Optimized") { vm.sortOrder = .optimized }
+                Button("Creation Date") { vm.sortOrder = .creationDate }
+                Button("Title") { vm.sortOrder = .title }
+            }
+            .toolbar {
+                addProjectToolbarItem
+                sortProjectToolbarItem
             }
             SelectSomethingView()
         }
@@ -46,15 +118,15 @@ struct ProjectsView: View {
     /// for creating a new project and sorting respectively.
     var projectsList: some View {
         List {
-            ForEach(projects.wrappedValue) { project in
+            ForEach(vm.projects) { project in
                 Section(header: ProjectHeaderView(project: project)) {
-                    ForEach(project.projectItems(using: sortOrder)) { item in
+                    ForEach(project.projectItems(using: vm.sortOrder)) { item in
                         ItemRowView(project: project, item: item)
                     }
                     .onDelete { offsets in
-                        delete(offsets, from: project)
+                        vm.delete(offsets, from: project)
                     }
-                    if showClosedProjects == false {
+                    if vm.showClosedProjects == false {
                         /*
                          In iOS 14.3 VoiceOver has a glitch that reads the label
                          "Add Project as "Add" no matter what accessibility label
@@ -62,7 +134,11 @@ struct ProjectsView: View {
                          VoiceOvewr is running we use a text view for hte button instead,
                          forcing a correct reading without losign the original layout.
                          */
-                        Button(action: addProject) {
+                        Button {
+                            withAnimation {
+                                vm.addItem(to: project)
+                            }
+                        } label: {
                             if UIAccessibility.isVoiceOverRunning {
                                 Text("Add Project")
                             } else {
@@ -74,16 +150,6 @@ struct ProjectsView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .navigationTitle(showClosedProjects ? "Closed Projects" : "Open Projects")
-        .confirmationDialog(Text("Sort items"), isPresented: $showingSortOrder) {
-            Button("Optimized") { sortOrder = .optimized }
-            Button("Creation Date") { sortOrder = .creationDate }
-            Button("Title") { sortOrder = .title }
-        }
-        .toolbar {
-            addProjectToolbarItem
-            sortProjectToolbarItem
-        }
     }
 
     /// The Toolbar button for displaying sort options.
@@ -100,8 +166,12 @@ struct ProjectsView: View {
     /// The Toolbar button for displaying add project option.
     var addProjectToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            if showClosedProjects == false {
-                Button(action: addProject) {
+            if vm.showClosedProjects == false {
+                Button {
+                    withAnimation {
+                        vm.addProject()
+                    }
+                } label: {
                     if UIAccessibility.isVoiceOverRunning {
                         Text("Add Project")
                     } else {
@@ -112,53 +182,14 @@ struct ProjectsView: View {
         }
     }
 
-    /// Creates new project and saves.
-    func addProject() {
-        withAnimation {
-            let project = Project(context: managedObjectContext)
-            project.closed = false
-            project.creationDate = Date()
-            dataController.save()
-        }
-    }
-    
-    func delete(_ offsets: IndexSet, from project: Project) {
-        let allItems = project.projectItems(using: sortOrder)
-        
-        for offset in offsets {
-            let item = allItems[offset]
-            dataController.delete(item)
-        }
-        
-        dataController.save()
-    }
-    
-    func addItem(to project: Project) {
-        withAnimation {
-            let item = Item(context: managedObjectContext)
-            item.project = project
-            item.creationDate = Date()
-            dataController.save()
-        }
-    }
-    
-    init(showClosedProjects: Bool) {
-        self.showClosedProjects = showClosedProjects
-        
-        projects = FetchRequest<Project>(
-            entity: Project.entity(),
-            sortDescriptors: [NSSortDescriptor(keyPath: \Project.creationDate, ascending: false)],
-            predicate: NSPredicate(format: "closed = %d", showClosedProjects)
-        )
+    init(dataController: DataController, showClosedProjects: Bool) {
+        let vm = ViewModel(dataController: dataController, showClosedProjects: showClosedProjects)
+        _vm = StateObject(wrappedValue: vm)
     }
 }
 
 struct ProjectsView_Previews: PreviewProvider {
-    static var dataController = DataController.preview
-    
     static var previews: some View {
-        ProjectsView(showClosedProjects: false)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
-            .environmentObject(dataController)
+        ProjectsView(dataController: DataController.preview, showClosedProjects: false)
     }
 }
