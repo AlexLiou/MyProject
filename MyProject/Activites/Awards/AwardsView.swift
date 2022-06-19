@@ -97,6 +97,11 @@ struct AwardsView: View {
             )
         }
     }
+
+    init(dataController: DataController) {
+        let vm = ViewModel(dataController: dataController)
+        _vm = StateObject(wrappedValue: vm)
+    }
 }
 
 //struct AwardsView_Previews: PreviewProvider {
