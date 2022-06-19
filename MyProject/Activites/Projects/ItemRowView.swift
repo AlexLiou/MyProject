@@ -11,7 +11,7 @@ import SwiftUI
 struct ItemRowView: View {
     @StateObject var vm: ViewModel
     @ObservedObject var item: Item
-    
+
     var body: some View {
         NavigationLink(destination: EditItemView(item: item)) {
             Label {

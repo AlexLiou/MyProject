@@ -8,8 +8,9 @@
 import Foundation
 
 extension Bundle {
-    
-    ///    T is our placeholder for some unknown type. file name as a string. A date decoding strategy to handle dates for this JSON file.
+
+    ///    T is our placeholder for some unknown type. file name as a string.
+    ///    A date decoding strategy to handle dates for this JSON file.
     ///    A key decoding strategy so we can convert between snake_case and camelCase.
     func decode<T: Decodable>(
         _ type: T.Type,
@@ -20,15 +21,15 @@ extension Bundle {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError("Failed to locate \(file) in bundle.")
         }
-        
+
         guard let data = try? Data(contentsOf: url) else {
             fatalError("Failed to load \(file) from bundle.")
         }
-        
+
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = dateDecodingStrategy
         decoder.keyDecodingStrategy = keyDecodingStrategy
-        
+
         do {
             return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {

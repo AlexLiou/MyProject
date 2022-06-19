@@ -11,7 +11,7 @@ extension Sequence {
     func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value>) -> [Element] {
         self.sorted(by: keyPath, using: <)
     }
-    
+
     func sorted<Value>(
         by keyPath: KeyPath<Element, Value>,
         using areInIncreasingOrder: (Value, Value) throws -> Bool
