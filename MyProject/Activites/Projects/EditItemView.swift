@@ -42,7 +42,7 @@ struct EditItemView: View {
             }
         }
         .navigationTitle("Edit Item")
-        .onDisappear(perform: dataController.save)
+        .onDisappear(perform: save)
     }
 
     /// Certain explanation for why the item was ititalized this way.
@@ -63,6 +63,10 @@ struct EditItemView: View {
         item.detail = detail
         item.priority = Int16(priority)
         item.completed = completed
+    }
+
+    func save() {
+        dataController.update(item)
     }
 }
 //

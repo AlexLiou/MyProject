@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import CoreSpotlight
 
 /*
  Almost all logic now comes out from the view, meaning that
@@ -22,6 +23,7 @@ extension HomeView {
 
         @Published var projects = [Project]()
         @Published var items = [Item]()
+        @Published var selectedItem: Item?
 
         var dataController: DataController
 
@@ -92,6 +94,10 @@ extension HomeView {
             dataController.deleteAll()
             try? dataController.createSampleData()
         }
+
+        func selectItem(with identifier: String) {
+            selectedItem = dataController.item(with: identifier)
+        }
     }
 }
 
@@ -99,9 +105,20 @@ extension HomeView {
 struct HomeView: View {
     @StateObject var vm: ViewModel
 
+    static let tag: String? = "Home"
+
     var body: some View {
         NavigationView {
             ScrollView {
+                if let item = vm.selectedItem {
+                    NavigationLink(
+                        destination: EditItemView(item: item),
+                        tag: item,
+                        selection: $vm.selectedItem,
+                        label: EmptyView.init
+                    )
+                    .id(item)
+                }
                 VStack(alignment: .leading) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: projectRows) {
@@ -117,6 +134,7 @@ struct HomeView: View {
                     .padding(.horizontal)
                 }
             }
+            .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
             .background(Color.systemGroupedBackground.ignoresSafeArea())
             .navigationTitle("Home")
             .toolbar {
@@ -135,6 +153,15 @@ struct HomeView: View {
         let vm = ViewModel(dataController: dataController)
         _vm = StateObject(wrappedValue: vm)
     }
+
+    /// Accepts a NSUserActivity then looks inside the data to find the unique identifier from spotlight.
+    /// - Parameter userActivity: <#userActivity description#>
+    func loadSpotlightItem(_ userActivity: NSUserActivity) {
+        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+            vm.selectItem(with: uniqueIdentifier)
+        }
+    }
+
 }
 
 struct HomeView_Previews: PreviewProvider {
