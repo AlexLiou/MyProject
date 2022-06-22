@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import CoreSpotlight
+import UserNotifications
 
 /// An environment singleton responsible for manaing our Core Data stack, including handling saving,
 /// counting fetch request, tracking awards, and dealing with sample data.
@@ -15,10 +16,25 @@ class DataController: ObservableObject {
     /// The lone CloudKit container responsible for loading and managing local data using CoreData, synced to iCloud
     let container: NSPersistentCloudKitContainer
 
+    // The UserDefaults suit where we're saving user data.
+    let defaults: UserDefaults
+
+    // Loads and saves whether our premium unlock has been purchased.
+    var fullVersionUnlocked: Bool {
+        get {
+            defaults.bool(forKey: "fullVersionUnlocked")
+        }
+
+        set {
+            defaults.set(newValue, forKey: "fullVersionUnlocked")
+        }
+    }
+
     /// Initializes a data controller, either in memeory (for temporary use such as testing and previewing),
     /// or on permanent storage (for use in regular app runs.) Defaults to permanent storage.
     ///  - Parameter inMemory: Whether to store this data in temporary memory or not.
-    init(inMemory: Bool = false) {
+    init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
+        self.defaults = defaults
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
         /*
          For testing and previewing purposes, we create a temporary, in-memory database
@@ -189,5 +205,91 @@ class DataController: ObservableObject {
         }
 
         return try? container.viewContext.existingObject(with: id) as? Item
+    }
+
+    /// Adds notification to a project.
+    ///
+    /// First check our authorization status for local notifications. If the status is not determined,
+    /// If we are already authorized, we can call placeReminders() immediately. If we're in any
+    /// other authorization state, call failure, user has not granted us permission.
+    /// - Parameters:
+    ///   - project: The project being added a reminder
+    ///   - completion: handler
+    func addReminders(for project: Project, completion: @escaping (Bool) -> Void) {
+        let center = UNUserNotificationCenter.current()
+
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined:
+                self.requestNotifications { success in
+                    if success {
+                        self.placeReminders(for: project, completion: completion)
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(false)
+                        }
+                    }
+                }
+            case .authorized:
+                self.placeReminders(for: project, completion: completion)
+            default:
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+            }
+        }
+    }
+
+    /// Removes notifications that are set for a single proejct
+    /// - Parameters:
+    ///   - project: container for the unique objectID
+    func removeReminders(for project: Project) {
+        let center = UNUserNotificationCenter.current()
+        let id = project.objectID.uriRepresentation().absoluteString
+        center.removePendingNotificationRequests(withIdentifiers: [id])
+    }
+
+    /// Requests notifcation authorization from iOS, asking to be able to show
+    /// an alert and play a sound, then call the completion handler with whatever
+    /// the system replies back with
+    /// - Parameter completion: completion handler
+    private func requestNotifications(completion: @escaping (Bool) -> Void) {
+        let center = UNUserNotificationCenter.current()
+
+        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
+            completion(granted)
+        }
+    }
+
+    /// Decides the content of the notification, tells the iOS when the notification should be shown,
+    /// wraps up those two pieces of info along with a unique identifier, then send it off to IOS to be shown
+    /// - Parameters:
+    ///   - project: the project in question
+    ///   - completion: handler
+    private func placeReminders(for project: Project, completion: @escaping (Bool) -> Void) {
+        let content = UNMutableNotificationContent()
+        content.sound = .default
+        content.title = project.projectTitle
+
+        if let projectDetail = project.detail {
+            content.subtitle = projectDetail
+        }
+
+        let components = Calendar.current.dateComponents([.hour, .minute], from: project.reminderTime ?? Date())
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+
+        let id = project.objectID.uriRepresentation().absoluteString
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+
+        // send notification request to iOS
+        UNUserNotificationCenter.current().add(request) { error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }
+        }
     }
 }

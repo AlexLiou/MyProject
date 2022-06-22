@@ -31,6 +31,7 @@
 		7915F720285D373300298DB1 /* MyProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F71F285D373300298DB1 /* MyProjectUITests.swift */; };
 		7915F722285D373300298DB1 /* MyProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F721285D373300298DB1 /* MyProjectUITestsLaunchTests.swift */; };
 		7915F729285FB6A900298DB1 /* ItemRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */; };
+		797CFF3E2863B34A000FC2A1 /* UnlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797CFF3D2863B34A000FC2A1 /* UnlockManager.swift */; };
 		79D999C72853DF8B00090113 /* MyProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C62853DF8B00090113 /* MyProjectApp.swift */; };
 		79D999C92853DF8B00090113 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C82853DF8B00090113 /* ContentView.swift */; };
 		79D999CB2853DF9300090113 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D999CA2853DF9300090113 /* Assets.xcassets */; };
@@ -96,6 +97,8 @@
 		7915F71F285D373300298DB1 /* MyProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectUITests.swift; sourceTree = "<group>"; };
 		7915F721285D373300298DB1 /* MyProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRowViewModel.swift; sourceTree = "<group>"; };
+		796542F72863BB3E00963C45 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		797CFF3D2863B34A000FC2A1 /* UnlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockManager.swift; sourceTree = "<group>"; };
 		79D999C32853DF8B00090113 /* MyProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79D999C62853DF8B00090113 /* MyProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectApp.swift; sourceTree = "<group>"; };
 		79D999C82853DF8B00090113 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				79D999D72853E46A00090113 /* DataController.swift */,
+				797CFF3D2863B34A000FC2A1 /* UnlockManager.swift */,
+				796542F72863BB3E00963C45 /* Configuration.storekit */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 				79D999EB2855199400090113 /* ProjectHeaderView.swift in Sources */,
 				7915F6D32856830F00298DB1 /* AwardsView.swift in Sources */,
 				79D999D62853E03600090113 /* Main.xcdatamodeld in Sources */,
+				797CFF3E2863B34A000FC2A1 /* UnlockManager.swift in Sources */,
 				79D999E12854096A00090113 /* Project-CoreDataHelpers.swift in Sources */,
 				7915F6D528568CFB00298DB1 /* Color-Additions.swift in Sources */,
 				79D999EF28551C1F00090113 /* EditProjectView.swift in Sources */,
