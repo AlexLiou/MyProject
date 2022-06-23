@@ -16,13 +16,21 @@ extension ProjectsView {
         @Published var projects = [Project]()
         let showClosedProjects: Bool
         @Published var sortOrder = Item.SortOrder.optimized
+        @Published var showingUnlockView = false
 
         /// Creates new project and saves.
         func addProject() {
-            let project = Project(context: dataController.container.viewContext)
-            project.closed = false
-            project.creationDate = Date()
-            dataController.save()
+            let canCreate = dataController.fullVersionUnlocked
+            || dataController.count(for: Project.fetchRequest()) < 3
+
+            if canCreate {
+                let project = Project(context: dataController.container.viewContext)
+                project.closed = false
+                project.creationDate = Date()
+                dataController.save()
+            } else {
+                showingUnlockView.toggle()
+            }
         }
 
         func delete(_ offsets: IndexSet, from project: Project) {
@@ -111,6 +119,9 @@ struct ProjectsView: View {
                 sortProjectToolbarItem
             }
             SelectSomethingView()
+        }
+        .sheet(isPresented: $vm.showingUnlockView) {
+            UnlockView()
         }
     }
 

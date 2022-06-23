@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import CoreSpotlight
 import UserNotifications
+import StoreKit
 
 /// An environment singleton responsible for manaing our Core Data stack, including handling saving,
 /// counting fetch request, tracking awards, and dealing with sample data.
@@ -168,9 +169,12 @@ class DataController: ObservableObject {
     }
 
     /// Writing data with Core Spotlight takes four small steps.
-    /// 1. Creating a unique identifier for the item you want to save. If you’re updating an existing item you should use the same identifier.
-    /// 2. Decide what attributes you want to store in Spotlight. There are hundreds of these to choose from, but you’ll probably want title and description at the very least.
-    /// 3. Wrap up the identifier and attributes in a Spotlight record, also passing in a domain identifier – a way to group certain pieces of data together.
+    /// 1. Creating a unique identifier for the item you want to save.
+    /// If you’re updating an existing item you should use the same identifier.
+    /// 2. Decide what attributes you want to store in Spotlight. There are hundreds of these to choose from
+    /// , but you’ll probably want title and description at the very least.
+    /// 3. Wrap up the identifier and attributes in a Spotlight record, also passing in a domain identifier
+    /// – a way to group certain pieces of data together.
     /// 4.Send that off to Spotlight for indexing.
     /// - Parameter item: <#item description#>
     func update(_ item: Item) {
@@ -290,6 +294,18 @@ class DataController: ObservableObject {
                     completion(false)
                 }
             }
+        }
+    }
+
+    /// Finds the first active scene (the one that's currently receiving user input) then asks for a review prompt
+    /// to appear there.
+    func appLaunched() {
+        guard count(for: Project.fetchRequest()) >= 5 else { return }
+        let allScenes = UIApplication.shared.connectedScenes
+        let scene = allScenes.first { $0.activationState == .foregroundActive }
+
+        if let windowScene = scene as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
         }
     }
 }

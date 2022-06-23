@@ -11,12 +11,25 @@ import StoreKit
 /*
  There are six steps you need to follow when implementing IAPs in your app:
 
- 1. Adding products for folks to buy. This means telling Apple which products you want to offer for sale, and how much they cost.
- 2. Monitoring the transaction queue. Purchases can happen at any point, so we need to make sure we’re watching for updates all the time.
- 3. Requesting available products. We ask Apple to provide the list of products to show – this is usually the list from step 1, but some IAPs might have been disabled or rejected by Apple.
- 4. Handling a transaction. This is where the user has completed a purchase – it might be successful, in which case we should provide the content, it might have failed, or something else could have happened.
- 5. Handling restoring purchases. This allows users to share purchases across more than one device, or to get their purchase back after reinstalling the app.
- 6. Creating a UI. I know this sounds like the most important thing, but really it’s the last step – you need to get all the foundations in place and working before creating your UI!
+ 1. Adding products for folks to buy. This means telling Apple which products
+ you want to offer for sale, and how much they cost.
+
+ 2. Monitoring the transaction queue. Purchases can happen at any point,
+ so we need to make sure we’re watching for updates all the time.
+
+ 3. Requesting available products. We ask Apple to provide the list of products to show
+ – this is usually the list from step 1, but some IAPs might have been disabled or rejected by Apple.
+
+ 4. Handling a transaction. This is where the user has completed a purchase
+ – it might be successful, in which case we should provide the content,
+ it might have failed, or something else could have happened.
+
+ 5. Handling restoring purchases. This allows users to share purchases across
+ more than one device, or to get their purchase back after reinstalling the app.
+
+ 6. Creating a UI. I know this sounds like the most important thing,
+ but really it’s the last step – you need to get all the foundations
+ in place and working before creating your UI!
 
  */
 
@@ -31,7 +44,8 @@ class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, S
         case loading
         // "Loaded" means we have a successful request from Apple describing what products are available for purchase
         case loaded(SKProduct)
-        // "Failed" means something went wrong, either with our request for products or with our attempt to make a purchase
+        // "Failed" means something went wrong, either with our request for products
+        // or with our attempt to make a purchase
         case failed(Error?)
         // "Purcahsed" means the user has successfully purchased the IAP, or restored a previous purchase.
         case purchased
@@ -62,8 +76,8 @@ class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, S
                     self.requestState = .purchased
                     queue.finishTransaction(transaction)
                 // Attempt to go back to the loaded state if we can, or otherwise update
-                    // our request state to be failed with whatever error occured.
-                    // Regardless, finish the transaction.
+                // our request state to be failed with whatever error occured.
+                // Regardless, finish the transaction.
                 case .failed:
                     if let product = loadedProducts.first {
                         self.requestState = .loaded(product)
@@ -80,7 +94,6 @@ class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, S
             }
         }
     }
-
 
     /// Called when our SKProductsRequest finishes succcessfully, because we assigned ourself as its delegate.
     /// - Parameters:
@@ -106,7 +119,6 @@ class UnlockManager: NSObject, ObservableObject, SKPaymentTransactionObserver, S
             self.requestState = .loaded(unlock)
         }
     }
-
 
     /// Carries out buying a product by putting the SKProduct into an SKPayment and puttting
     /// that into the payment queue. iOS then takes over the work of validating the payment.
