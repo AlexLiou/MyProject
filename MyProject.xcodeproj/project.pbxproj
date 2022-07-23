@@ -36,6 +36,11 @@
 		797173CE2864EE7300F0A3CD /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797173CD2864EE7300F0A3CD /* ProductView.swift */; };
 		797173D02864EFEF00F0A3CD /* UnlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797173CF2864EFEE00F0A3CD /* UnlockView.swift */; };
 		797CFF3E2863B34A000FC2A1 /* UnlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797CFF3D2863B34A000FC2A1 /* UnlockManager.swift */; };
+		7981F6A1288B79F1003E4C00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981F6A0288B79F1003E4C00 /* AppDelegate.swift */; };
+		7981F6A3288B79F7003E4C00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981F6A2288B79F7003E4C00 /* SceneDelegate.swift */; };
+		7981F6A5288B86C4003E4C00 /* ProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981F6A4288B86C4003E4C00 /* ProjectsViewModel.swift */; };
+		7981F6A7288B8741003E4C00 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981F6A6288B8741003E4C00 /* HomeViewModel.swift */; };
+		7981F6A9288B8778003E4C00 /* AwardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981F6A8288B8778003E4C00 /* AwardsViewModel.swift */; };
 		79D999C72853DF8B00090113 /* MyProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C62853DF8B00090113 /* MyProjectApp.swift */; };
 		79D999C92853DF8B00090113 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D999C82853DF8B00090113 /* ContentView.swift */; };
 		79D999CB2853DF9300090113 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79D999CA2853DF9300090113 /* Assets.xcassets */; };
@@ -107,6 +112,11 @@
 		797173CD2864EE7300F0A3CD /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		797173CF2864EFEE00F0A3CD /* UnlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockView.swift; sourceTree = "<group>"; };
 		797CFF3D2863B34A000FC2A1 /* UnlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockManager.swift; sourceTree = "<group>"; };
+		7981F6A0288B79F1003E4C00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7981F6A2288B79F7003E4C00 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7981F6A4288B86C4003E4C00 /* ProjectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsViewModel.swift; sourceTree = "<group>"; };
+		7981F6A6288B8741003E4C00 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		7981F6A8288B8778003E4C00 /* AwardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsViewModel.swift; sourceTree = "<group>"; };
 		79D999C32853DF8B00090113 /* MyProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79D999C62853DF8B00090113 /* MyProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectApp.swift; sourceTree = "<group>"; };
 		79D999C82853DF8B00090113 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -198,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				79D999DA2853F43900090113 /* HomeView.swift */,
+				7981F6A6288B8741003E4C00 /* HomeViewModel.swift */,
 				7915F6E62857DBA600298DB1 /* ItemListView.swift */,
 				7915F6E82857DC5900298DB1 /* ProjectSummaryView.swift */,
 			);
@@ -213,6 +224,7 @@
 				7915F728285FB6A900298DB1 /* ItemRowViewModel.swift */,
 				79D999EA2855199400090113 /* ProjectHeaderView.swift */,
 				79D999DC2853F55A00090113 /* ProjectsView.swift */,
+				7981F6A4288B86C4003E4C00 /* ProjectsViewModel.swift */,
 				7915F6C828567DD000298DB1 /* SelectSomethingView.swift */,
 			);
 			path = Projects;
@@ -222,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				7915F6D22856830F00298DB1 /* AwardsView.swift */,
+				7981F6A8288B8778003E4C00 /* AwardsViewModel.swift */,
 				7915F6D0285682B300298DB1 /* Award.swift */,
 				7915F6E42857D00500298DB1 /* Awards.json */,
 			);
@@ -315,6 +328,8 @@
 				797173D12864F26B00F0A3CD /* Configuration */,
 				79D999D92853F00D00090113 /* Info.plist */,
 				79D999C62853DF8B00090113 /* MyProjectApp.swift */,
+				7981F6A0288B79F1003E4C00 /* AppDelegate.swift */,
+				7981F6A2288B79F7003E4C00 /* SceneDelegate.swift */,
 				7915F6EA2859133800298DB1 /* Strings.swift */,
 				79D999CA2853DF9300090113 /* Assets.xcassets */,
 				79D999EC28551BC700090113 /* Color.xcassets */,
@@ -519,9 +534,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				79D999DD2853F55A00090113 /* ProjectsView.swift in Sources */,
+				7981F6A9288B8778003E4C00 /* AwardsViewModel.swift in Sources */,
 				7915F6E92857DC5900298DB1 /* ProjectSummaryView.swift in Sources */,
 				797173D02864EFEF00F0A3CD /* UnlockView.swift in Sources */,
+				7981F6A7288B8741003E4C00 /* HomeViewModel.swift in Sources */,
 				79D999EB2855199400090113 /* ProjectHeaderView.swift in Sources */,
+				7981F6A1288B79F1003E4C00 /* AppDelegate.swift in Sources */,
+				7981F6A3288B79F7003E4C00 /* SceneDelegate.swift in Sources */,
 				7915F6D32856830F00298DB1 /* AwardsView.swift in Sources */,
 				79D999D62853E03600090113 /* Main.xcdatamodeld in Sources */,
 				797CFF3E2863B34A000FC2A1 /* UnlockManager.swift in Sources */,
@@ -530,6 +549,7 @@
 				79D999EF28551C1F00090113 /* EditProjectView.swift in Sources */,
 				797173CA2864ECB000F0A3CD /* SKProduct-LocalizedPrice.swift in Sources */,
 				797173CE2864EE7300F0A3CD /* ProductView.swift in Sources */,
+				7981F6A5288B86C4003E4C00 /* ProjectsViewModel.swift in Sources */,
 				79D999D82853E46A00090113 /* DataController.swift in Sources */,
 				7915F6C928567DD000298DB1 /* SelectSomethingView.swift in Sources */,
 				797173CC2864ED1700F0A3CD /* PurchaseButton.swift in Sources */,
